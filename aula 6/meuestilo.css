@@ -1,10 +1,12 @@
 body{
     background: silver;
+    font: "arial black";
 }
 
 p{
     color: green;
     font-style: italic;
+    font-family: "monotype Corsiva";
 }
 h3, h4{
     font-family: arial;
