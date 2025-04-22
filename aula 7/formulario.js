@@ -2,9 +2,9 @@
 
 //DEFINE O OBJETO E CHAMA A FUNCAO
 function mascara(o, f) {
-    Object=o
+    objeto=o
     funcao=f
-    setTimeout ("executaMascara",1)
+    setTimeout("executaMascara()",1)
 }
 
 function executaMascara(){
@@ -61,4 +61,11 @@ function data(variavel){
 
 }
 
+//Mascara de Cartão SUS
+function CartaoSus(variavel){
 
+
+    variavel = variavel.replace(/\D/g,"")
+    return variavel
+
+}
