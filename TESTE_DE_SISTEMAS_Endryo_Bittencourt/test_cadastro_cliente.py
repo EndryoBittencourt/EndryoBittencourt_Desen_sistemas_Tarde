@@ -25,7 +25,6 @@ endereco_input.send_keys("Rua das Flores, 123")
 telefone_input = driver.find_element(By.ID, "phone")
 telefone_input.send_keys("11987654321")
 
-
 #clica no botão de Cadastrar
 submit_button = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
 submit_button.click()
