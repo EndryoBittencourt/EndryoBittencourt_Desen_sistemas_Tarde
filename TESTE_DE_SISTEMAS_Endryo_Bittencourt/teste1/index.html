@@ -4,28 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Cliente</title>
-    <link rel="stylesheet" href="../TESTE_DE_SISTEMAS_Endryo_Bittencourt/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h2>Cadastro Cliente</h2>
-        <form action="/submit" method="post">
-
+        <form action="" method="post">
             <label for="name">Nome:</label>
             <input type="text" id="name" name="name" required>
 
             <label for="cpf">CPF:</label>
-            <input type="text" id="cpf" name="cpf" required pattern="\d{11}" title="insira um CPF válido (11 Dígitos)">
+            <input type="text" id="cpf" name="cpf" required pattern="\d{11}" title="Insira um CPF válido (11 Dígitos)">
 
             <label for="address">Endereço:</label>
             <input type="text" id="address" name="address" required>
 
             <label for="phone">Telefone:</label>
-            <input type="text" id="phone" name="phone" required pattern="\d{10,11}" title="insira um Telefone válido (10 ou 11 Dígitos)">
+            <input type="text" id="phone" name="phone" required pattern="\d{10,11}" title="Insira um Telefone válido (10 ou 11 Dígitos)">
 
             <button type="submit">Cadastrar</button>
         </form>
     </div>
-    
 </body>
 </html>
