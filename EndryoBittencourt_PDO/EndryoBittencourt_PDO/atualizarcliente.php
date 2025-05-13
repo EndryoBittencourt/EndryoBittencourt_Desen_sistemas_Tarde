@@ -1,48 +1,40 @@
 <?php
-
 require_once 'conexao.php';
 
-$conexao = conectarbanco();
+$conexao = conectarBanco();
 
-//Obtendo o ID via GET
-
-$pk_cliente = $_GET['id'] ?? null;
+// Obtendo o ID via GET
+$idCliente = $_GET['id'] ?? null;
 $cliente = null;
 $msgErro = "";
 
-//função local para buscar cliente por id
-
-function buscarClientePorId($pk_cliente, $conexao){
+// Função para buscar cliente por ID
+function buscarClientePorId($idCliente, $conexao) {
     $stmt = $conexao->prepare("SELECT pk_cliente, nome, endereco, telefone, email FROM cliente WHERE pk_cliente = :id");
-    $stmt->bindParam(":pk_cliente", $pk_cliente, PDO::PARAM_INT);
+    $stmt->bindParam(":id", $pk_cliente, PDO::PARAM_INT);
     $stmt->execute();
-
     return $stmt->fetch();
 }
 
-//se um ID foi enciado, busca o cliente no banco
-
-if($pk_cliente && is_numeric($pk_cliente)){
-    $cliente = buscarClientePorId($pk_cliente, $conexao);
-
-    if(!$cliente){
+// Se um ID foi enviado, busca o cliente no banco
+if ($idCliente && is_numeric($idCliente)) {
+    $cliente = buscarClientePorId($idCliente, $conexao);
+    if (!$cliente) {
         $msgErro = "Erro: Cliente não encontrado.";
     }
-    } else{
-        $msgErro= "Digite o ID do cliente para buscar os dador";
-
-    }
-
+} else {
+    $msgErro = "Digite o ID do cliente para buscar os dados.";
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="pt_br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atualizar Cliente</title>
-    <link rel="stylesheet" href="style.css">
     <script>
-        function habilitarEdicao(campo){
+        function habilitarEdicao(campo) {
             document.getElementById(campo).removeAttribute("readonly");
         }
     </script>
@@ -50,36 +42,33 @@ if($pk_cliente && is_numeric($pk_cliente)){
 <body>
     <h2>Atualizar Cliente</h2>
 
-    <?php if($msgErro):?>
-        <p style="color:red;"><?=htmlspecialchars($msgErro)?></p>
-
-        <form action="atualizarCliente.php" method="GET">
-            <label for="pk_cliente">ID do cliente: </label>
-            <input type="text" id="pk_cliente" name= "pk_cliente" required>
+    <!-- Se houver erro, exibe a mensagem e o campo de busca -->
+    <?php if ($msgErro): ?>
+        <p style="color:red;"><?=htmlspecialchars($msgErro) ?></p>
+        <form action="atualizarcliente.php" method="GET">
+            <label for="id">ID do Cliente:</label>
+            <input type="number" id="id" name="id" required>
             <button type="submit">Buscar</button>
-    </form>
+        </form>
+    <?php else: ?>
+        <!-- Se um cliente for encontrado, exibe o formulário preenchido -->
+        <form action="processaratualizacao.php" method="POST">
+            <input type="hidden" name="id_cliente" value="<?= htmlspecialchars($cliente['pl_cliente']) ?>">
 
-    <form action="atualizarCliente.php" method="POST">
-       <input type="hidden" name="pk_cliente" value="<?=htmlspecialchars($cliente['pk_cliente'])?>">
-       
-       <label for="nome">Nome: </label>
-       <input type="hidden" name="nome" value="<?=htmlspecialchars($cliente['nome'])?>" readonly onclick="habilitarEdicao('nome')">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($cliente['nome']) ?>" readonly onclick="habilitarEdicao('nome')">
 
-       <label for="endereco">Endereço: </label>
-       <input type="hidden" name="endereco" value="<?=htmlspecialchars($cliente['endereco'])?>" readonly onclick="habilitarEdicao('endereco')">
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" value="<?= htmlspecialchars($cliente['endereco']) ?>" readonly onclick="habilitarEdicao('endereco')">
 
-       <label for="telefone">Telefone: </label>
-       <input type="hidden" name="telefone" value="<?=htmlspecialchars($cliente['telefone'])?>" readonly onclick="habilitarEdicao('telefone')">
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" value="<?= htmlspecialchars($cliente['telefone']) ?>" readonly onclick="habilitarEdicao('telefone')">
 
-       <label for="email">E-mail: </label>
-       <input type="hidden" name="email" value="<?=htmlspecialchars($cliente['email'])?>" readonly onclick="habilitarEdicao('email')">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" value="<?= htmlspecialchars($cliente['email']) ?>" readonly onclick="habilitarEdicao('email')">
 
-
-       <button type="submit">Atualizar Cliente</button>
-
-        
-    </form>
-          
+            <button type="submit">Atualizar Cliente</button>
+        </form>
     <?php endif; ?>
 </body>
 </html>
