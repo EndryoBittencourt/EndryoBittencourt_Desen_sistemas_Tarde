@@ -1,65 +1,41 @@
+
+<?php include 'proteger.php'; ?>
 <?php
-
-//CONEXAO COM O BANCO DE DADOS
- $host = 'localhost:3307';
- $dbname = 'bd_imagem';
- $username = 'root';
- $password = 'root';
-
- try{
-    //CRIA UMA NOVA INSTANCIA DE PDO PARA CONECTAR AO BANCO DE DADOS
-    $pdo = new PDO("mysql:host=$host; dbname=$dbname", $username,$password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //DEFINE O MODO DE ERRO DO PDO PARA EXCECOES
-
-    //RECUPERA TODOS OS FUNCIONARIOS DO BANCO DE DADOS
-    $sql = "SELECT id,nome FROM funcionarios";
-    $stmt = $pdo->prepare($sql);//PREPARA A INSTRUÇAO SQL PARA EXECUCAO
-    $stmt->execute();//EXECUTA A INSTRUÇAO
-    $funcionarios = $stmt->fetchALL(PDO::FETCH_ASSOC); //BUSCA TODOS OS RESULTADOS COM UMA MATRIZ ASSOCIATIVA
-
-    //VERIFICA SE FOI SOLICITADO A EXCLUSAO DE UM FORMULARIO
-    if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['excluir_id'])){
-        $excluir_id = $_POST['excluir_id'];
-        $sql_excluir = "DELETE FROM funcionarios WHERE id = :id";
-        $stmt_excluir = $pdo->prepare($sql_excluir);
-        $stmt_excluir->bindParam(':id', $excluir_id, PDO::PARAM_INT);
-        $stmt_excluir->execute();
-
-        //REDIRECIONA PARA EVITAR O REENVIO DO FORMULARIO
-        header("Location: ".$_SERVER['PHP_SELF']);
-        exit();
-    }
-    } catch(PDOException $e){
-        echo "Erro.".$e->getMessage();
-     }
-
-
- ?>
-
- <!DOCTYPE html>
- <html lang="pt-br">
- <head>
+$conn = new mysqli("localhost", "root", "", "bd_imagem");
+$busca = $_GET['busca'] ?? '';
+$sql = "SELECT id, nome, telefone FROM funcionarios WHERE nome LIKE ?";
+$stmt = $conn->prepare($sql);
+$param = "%$busca%";
+$stmt->bind_param("s", $param);
+$stmt->execute();
+$resultado = $stmt->get_result();
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta Funcionario</title>
- </head>
- <body>
-    <h1>Consulta de Funcionario</h1>
-
-    <ul>
-        <?php foreach ($funcionarios as $funcionario): ?>
-        <li>
-            <a href="visualizar_funcionario.php?id <? $funcionario['id'] ?>">
-                <?=htmlspecialchars($funcionario['nome']) ?>
-            </a>
-
-            <form method="POST" style="display:inline;">
-                <input type="hidden" name="excluir_id" value="<? $funcionario['id']?>">
-                <button type="submit">Excluir</button>
-            </form>
-        </li>
-        <?php endforeach; ?>
-    </ul>
-    
- </body>
- </html>
+    <title>Consultar Funcionários</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<?php include 'menu.php'; ?>
+<div class="container">
+    <h2>Consultar Funcionários</h2>
+    <form method="GET">
+        <input type="text" name="busca" placeholder="Buscar por nome" value="<?= htmlspecialchars($busca) ?>">
+        <button type="submit">Buscar</button>
+    </form>
+    <table>
+        <tr><th>ID</th><th>Nome</th><th>Telefone</th><th>Ações</th></tr>
+        <?php while ($linha = $resultado->fetch_assoc()): ?>
+        <tr>
+            <td><?= $linha['id'] ?></td>
+            <td><?= $linha['nome'] ?></td>
+            <td><?= $linha['telefone'] ?></td>
+            <td><a href="visualizar_funcionario.php?id=<?= $linha['id'] ?>">Visualizar</a></td>
+        </tr>
+        <?php endwhile; ?>
+    </table>
+</div>
+</body>
+</html>

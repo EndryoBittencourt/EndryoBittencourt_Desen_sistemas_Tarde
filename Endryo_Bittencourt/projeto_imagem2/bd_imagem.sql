@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `bd_imagem`
 --
-CREATE DATABASE IF NOT EXISTS `bd_imagem` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS `bd_imagem`;
 USE `bd_imagem`;
 
 -- --------------------------------------------------------
@@ -28,6 +28,8 @@ USE `bd_imagem`;
 --
 -- Estrutura para tabela `funcionarios`
 --
+
+select * from usuarios;
 
 DROP TABLE IF EXISTS `funcionarios`;
 CREATE TABLE IF NOT EXISTS `funcionarios` (
@@ -38,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `funcionarios` (
   `tipo_foto` varchar(255) DEFAULT NULL,
   `foto` longblob,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;
 
 -- --------------------------------------------------------
 
@@ -53,9 +55,17 @@ CREATE TABLE IF NOT EXISTS `imagens` (
   `tipo_imagem` varchar(50) DEFAULT NULL,
   `imagem` longblob,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-COMMIT;
+) ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    senha VARCHAR(50) NOT NULL
+);
+
+INSERT INTO usuarios (usuario, senha)
+VALUES ('admin', '1234');

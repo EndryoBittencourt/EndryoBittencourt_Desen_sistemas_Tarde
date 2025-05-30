@@ -1,35 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Cadastro</title>
+    <title>Cadastro de Funcionário</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastro</h1>
-        <h2>Funcionario</h2>
-<!-- FORMULARIO PARA CADASTRAR FUNCIONARIO -->
-    <form action="salvar_funcionario.php" method="POST" enctype="multipart/form-date">
+    <form action="salvar_funcionario.php" method="POST" enctype="multipart/form-data">
+        <h1>Cadastro de Funcionário</h1>
 
-    <!-- CAMPO PARA INSERIR O NOME DO FUNCIONARIO-->
-    <label for="nome">Nome: </label>
-    <input type="text" name="nome" id="nome" required><br>
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" required>
 
-    <!-- CAMPO PARA INSERIR O TELEFONE DO FUNCIONARIO-->
-    <label for="telefone">Telefone: </label>
-    <input type="tel" name="telefone" id="telefone" required><br>
+        <label for="telefone">Telefone:</label>
+        <input type="text" name="telefone" id="telefone">
 
-    <!-- CAMPO PARA FAZER UPLOAD DA FOTO DO FUNCIONARIO -->
-    <label for="foto">Foto: </label>
-    <input type="file" name="foto" id="foto" required><br>
+        <label for="foto">Foto:</label>
+        <input type="file" name="foto" id="foto" accept="image/*">
 
-    <!-- BOTAO PARA ENVIAR O FORMULARIO -->
-    <button type="submit">Cadastrar</button>
-
+        <button type="submit">Cadastrar</button>
     </form>
-    </div>
-    
 </body>
+<?php include 'menu.php'; ?>
+
 </html>
