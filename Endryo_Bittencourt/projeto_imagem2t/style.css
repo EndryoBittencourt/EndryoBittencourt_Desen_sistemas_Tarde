@@ -1,0 +1,211 @@
+/* Estilos gerais para a página */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #dba0c1;
+    height: 100vh; /* Ocupa toda a altura da tela */
+    margin: 0;
+
+}
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(241, 63, 173, 0.363);
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os elementos */
+    width: 300px;
+}
+
+label {
+    font-weight: bold;
+}
+
+/* Cabeçalhos */
+h1{
+    font-family: Arial, sans-serif;
+    font-size: 35px; /* Aumenta o tamanho da fonte */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+h2{
+    font-family: Arial, sans-serif;
+    font-size: 20px; /* Aumenta o tamanho da fonte */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #eb65b3;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #e77eaf;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #922a5e;
+}
+
+tr,td {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #a52963;
+    border-radius: 4px;
+    font-size: 16px;    
+    
+}
+a {
+    color: #eb65b3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+input[type="submit"] {
+    background-color: #eb65b3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;    
+    font-size: 16px;
+    width: 50%;
+    align-self: center;
+    transition: background-color 0.2s ease;
+}
+input[type="submit"]:hover {
+    background-color: #b4207bc9;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(238, 12, 118, 0.418);
+    max-width: 800px;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.funcionarios-list {
+    margin-top: 30px;
+    background: #fff0f7;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(231, 126, 175, 0.15);
+}
+
+.funcionario-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffe5f1;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 5px solid #eb65b3;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Botão padrão */
+.button, .botao-visualizar {
+    background-color: #eb65b3;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    display: inline-flex;            /* ✅ importante */
+    justify-content: center;        /* ✅ horizontal */
+    align-items: center;            /* ✅ vertical */
+    text-align: center;
+    height: 30px;                   /* define altura mínima uniforme */
+    min-width: 90px;               /* largura mínima para estética */
+}
+
+
+/* Hover dos botões */
+.button:hover, .botao-visualizar:hover {
+    background-color: #922a5e;
+}
+
+
+.visualizar-container {
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgb(134, 30, 79);
+    max-width: 400px;
+    height: 400px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.visualizar-container h1 {
+    color: #b4207b;
+    margin-bottom: 30px;
+}
+
+.visualizar-container p {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.visualizar-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 4px solid #eb65b3;
+}
+
+.visualizar-container form {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px; /* Reduz a distância do botão para cima */
+}
+
+.visualizar-container button {
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #d6305f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;       /* espaço entre a imagem e o botão */
+}
+
+
+.visualizar-container button:hover {
+    background-color: #922a5e;
+}
+
