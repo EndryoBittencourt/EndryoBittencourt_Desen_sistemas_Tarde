@@ -1,23 +1,7 @@
 <?php
-// Ativa exibição de erros
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+include 'proteger.php';
+include 'conexao.php';
 
-// Conexão com o banco de dados
-$host = "localhost";
-$usuario = "root";
-$senha = "";
-$banco = "bd_imagem";
-
-$conn = new mysqli($host, $usuario, $senha, $banco);
-
-// Verifica conexão
-if ($conn->connect_error) {
-    die("Erro na conexão com o banco de dados: " . $conn->connect_error);
-}
-
-// Verifica se formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nome = $_POST['nome'] ?? '';
     $telefone = $_POST['telefone'] ?? '';
@@ -25,27 +9,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nome_foto = null;
     $tipo_foto = null;
 
-    // Verifica se uma foto foi enviada
+    // Processar foto
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-        $nome_foto = $_FILES['foto']['name'];
+        // Verificar tipo de arquivo
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
         $tipo_foto = $_FILES['foto']['type'];
-        $fotoBlob = file_get_contents($_FILES['foto']['tmp_name']);
+        
+        if (in_array($tipo_foto, $allowed_types)) {
+            $nome_foto = basename($_FILES['foto']['name']);
+            $fotoBlob = file_get_contents($_FILES['foto']['tmp_name']);
+        } else {
+            $_SESSION['erro'] = "Tipo de arquivo não permitido. Use apenas JPEG, PNG ou GIF.";
+            header("Location: cadastro_funcionario.php");
+            exit;
+        }
     }
 
-    // Prepara e executa inserção
-    $stmt = $conn->prepare("INSERT INTO funcionarios (nome, telefone, nome_foto, tipo_foto, foto) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $nome, $telefone, $nome_foto, $tipo_foto, $fotoBlob);
+    // Inserir no banco de dados
+    $stmt = $conexao->prepare("INSERT INTO funcionarios 
+                              (nome, telefone, foto, nome_foto, tipo_foto) 
+                              VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $nome, $telefone, $fotoBlob, $nome_foto, $tipo_foto);
 
     if ($stmt->execute()) {
-        echo "Funcionário cadastrado com sucesso!";
+        $_SESSION['mensagem'] = "Funcionário cadastrado com sucesso!";
+        header("Location: consultar_funcionario.php");
+        exit;
     } else {
-        echo "Erro ao cadastrar funcionário: " . $stmt->error;
+        $_SESSION['erro'] = "Erro ao cadastrar funcionário: " . $conexao->error;
+        header("Location: cadastro_funcionario.php");
+        exit;
     }
-
-    $stmt->close();
 } else {
-    echo "Requisição inválida.";
+    $_SESSION['erro'] = "Requisição inválida.";
+    header("Location: cadastro_funcionario.php");
+    exit;
 }
-
-$conn->close();
 ?>

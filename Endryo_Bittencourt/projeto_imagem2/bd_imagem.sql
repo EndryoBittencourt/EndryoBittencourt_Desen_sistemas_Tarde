@@ -29,7 +29,7 @@ USE `bd_imagem`;
 -- Estrutura para tabela `funcionarios`
 --
 
-select * from usuarios;
+select * from funcionarios;
 
 DROP TABLE IF EXISTS `funcionarios`;
 CREATE TABLE IF NOT EXISTS `funcionarios` (

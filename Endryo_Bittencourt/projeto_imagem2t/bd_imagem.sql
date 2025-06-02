@@ -74,7 +74,7 @@ INSERT INTO `adm` (`nome_adm`, `email_adm`, `senha`) VALUES
 ('Administrador', 'admin@admin.com', '123');
 UPDATE adm SET senha = '123' WHERE email_adm = 'admin@admin.com';
 
-select * from adm;
+select * from funcionarios;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -86,5 +86,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+ALTER TABLE `funcionarios` ADD COLUMN `data_cadastro` TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 
